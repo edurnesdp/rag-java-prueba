@@ -53,3 +53,122 @@ Todo de forma clara y fácil de entender.
 ---
 
 ## 🏗️ Arquitectura (simplificada)
+
+┌──────────────┐
+│    Usuario   │
+└───────┬──────┘
+        │ Pregunta
+        ▼
+┌────────────────────┐
+│ API Java (Spring)  │
+│  Endpoint /ask    │
+└───────┬────────────┘
+        │
+        │ 1. Analiza la pregunta
+        ▼
+┌────────────────────┐
+│ Búsqueda en        │
+│ documentos locales │
+│ (SearchService)    │
+└───────┬────────────┘
+        │
+        │ 2. Textos relevantes
+        ▼
+┌────────────────────┐
+│ Construcción del   │
+│ prompt RAG         │
+│ (pregunta + textos)│
+└───────┬────────────┘
+        │
+        │ 3. Generar respuesta
+        ▼
+┌────────────────────┐
+│ IA Generativa      │
+│ (solo redacta)     │
+└───────┬────────────┘
+        │
+        ▼
+┌──────────────┐
+│  Respuesta   │
+└──────────────┘
+
+### SearchService
+
+Este servicio se encarga de buscar fragmentos relevantes
+en documentos locales a partir de una pregunta del usuario.
+
+Para simplificar el aprendizaje:
+- Los documentos se dividen en párrafos
+- Se usan palabras clave para calcular relevancia
+
+En un sistema real, este componente se sustituiría por
+búsqueda semántica basada en vectores.
+
+### DocumentLoader
+
+Este componente se encarga de cargar documentos locales
+y dividirlos en fragmentos (DocumentChunks).
+
+Cada fragmento contiene:
+- El texto del documento (content)
+- El origen del texto (source)
+
+Su única responsabilidad es preparar la información
+para que pueda ser buscada posteriormente.
+
+### RagService
+
+Este servicio implementa el patrón RAG (Retrieval‑Augmented Generation).
+
+Su responsabilidad es:
+- Unir la pregunta del usuario
+- Los fragmentos de documentos encontrados
+- Y construir un prompt claro para la IA
+
+La IA no busca información ni decide qué usar;
+solo genera la respuesta basándose en el contexto proporcionado.
+
+### LlmClient
+
+La integración con la IA se encapsula en un cliente específico (`LlmClient`).
+
+La IA:
+- No busca documentos
+- No accede al sistema
+- No decide qué información es válida
+
+Solo recibe un texto (prompt) y genera una respuesta.
+El control del comportamiento reside completamente en la arquitectura.
+
+---
+
+## 🚀 Cómo compilar, ejecutar y debuggear la aplicación
+
+### Compilar la aplicación
+Para compilar el proyecto, asegúrate de tener Maven instalado y ejecuta el siguiente comando:
+
+```bash
+mvn clean install
+```
+
+### Ejecutar la aplicación
+Puedes ejecutar la aplicación utilizando el siguiente comando:
+
+```bash
+mvn spring-boot:run
+```
+
+Si deseas ejecutarla con un perfil específico, como `mock`, utiliza:
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=mock
+```
+
+### Debuggear la aplicación
+Para debuggear la aplicación, puedes iniciar Spring Boot en modo debug con el siguiente comando:
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.fork=false -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+```
+
+Esto abrirá el puerto `5005` para que puedas conectar tu depurador favorito.
