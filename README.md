@@ -178,3 +178,7 @@ mvn spring-boot:run -Dspring-boot.run.fork=false -Dspring-boot.run.jvmArguments=
 ```
 
 Esto abrirá el puerto `5005` para que puedas conectar tu depurador favorito.
+
+---
+
+**Nota:** Este proyecto ha sido generado parcialmente utilizando GitHub Copilot, una herramienta de asistencia de código basada en inteligencia artificial. Todo el código generado ha sido revisado y adaptado para cumplir con los requisitos del proyecto.
