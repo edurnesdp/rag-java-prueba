@@ -50,6 +50,12 @@
 
     <!-- Ensure Java HTTP client is available -->
     <!-- No additional dependency needed for java.net.http as it is part of Java 11+ -->
+
+    <!-- Spring Security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

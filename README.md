@@ -110,6 +110,24 @@ Para simplificar el aprendizaje:
 En un sistema real, este componente se sustituiría por
 búsqueda semántica basada en vectores.
 
+### SemanticSearchService
+
+El `SemanticSearchService` es una implementación del servicio `SearchService` que utiliza embeddings para realizar búsquedas semánticas en los documentos cargados. Este servicio:
+
+- Genera embeddings para cada fragmento de documento utilizando un cliente de embeddings (`EmbeddingClient`).
+- Calcula la similitud entre el embedding de la pregunta y los embeddings de los fragmentos para encontrar los más relevantes.
+- Devuelve los fragmentos más relevantes ordenados por su similitud.
+
+### SimulatedOpenAiEmbeddingClient
+
+El `SimulatedOpenAiEmbeddingClient` es una implementación simulada del cliente de embeddings (`EmbeddingClient`). Este cliente:
+
+- Genera un vector de tamaño fijo (256) para representar un texto.
+- Utiliza un enfoque simple basado en hashing de tokens para asignar valores al vector.
+- Normaliza el vector resultante para que tenga una magnitud unitaria.
+
+Este cliente es útil para pruebas y simulaciones, ya que no requiere una conexión a un servicio externo.
+
 ### DocumentLoader
 
 Este componente se encarga de cargar documentos locales
@@ -146,6 +164,16 @@ La IA:
 Solo recibe un texto (prompt) y genera una respuesta.
 El control del comportamiento reside completamente en la arquitectura.
 
+### HybridSearchService
+
+El `HybridSearchService` es una implementación del servicio `SearchService` que combina resultados de búsquedas por palabras clave y búsquedas semánticas. Este servicio:
+
+- Utiliza `KeyWordSearchService` para realizar búsquedas precisas basadas en palabras clave.
+- Utiliza `SemanticSearchService` para realizar búsquedas flexibles basadas en embeddings.
+- Asigna diferentes pesos a los resultados de cada búsqueda y los combina para devolver los fragmentos más relevantes.
+
+Este enfoque híbrido equilibra precisión y flexibilidad, proporcionando resultados más completos.
+
 ---
 
 ## 🚀 Cómo compilar, ejecutar y debuggear la aplicación
@@ -178,6 +206,37 @@ mvn spring-boot:run -Dspring-boot.run.fork=false -Dspring-boot.run.jvmArguments=
 ```
 
 Esto abrirá el puerto `5005` para que puedas conectar tu depurador favorito.
+
+---
+
+### Autenticación
+
+La aplicación utiliza Spring Security para proteger ciertos endpoints mediante autenticación básica. A continuación, se describen los detalles de la configuración:
+
+- **Endpoints protegidos**:
+  - `/ask`
+  - `/status`
+- **Usuarios predeterminados**:
+  - Usuario estándar:
+    - Nombre de usuario: `user`
+    - Contraseña: `password`
+    - Rol: `USER`
+  - Administrador:
+    - Nombre de usuario: `admin`
+    - Contraseña: `admin`
+    - Rol: `ADMIN`
+- **Método de autenticación**:
+  - Autenticación básica (Basic Auth), donde el cliente envía las credenciales en el encabezado de la solicitud.
+
+#### Ejemplo de uso
+Puedes probar la autenticación utilizando herramientas como `curl` o Postman.
+
+**Ejemplo con `curl`**:
+```bash
+curl -u user:password http://localhost:8080/ask
+```
+
+Si las credenciales son correctas, recibirás una respuesta exitosa. Si no, obtendrás un error `401 Unauthorized`.
 
 ---
 

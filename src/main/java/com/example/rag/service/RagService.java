@@ -9,10 +9,10 @@ import com.example.rag.client.LlmClient;
 @Service
 public class RagService {
 
-    private final SearchService searchService;
+    private final KeyWordSearchService searchService;
     private final LlmClient llmClient;
 
-    public RagService(SearchService searchService, @Qualifier("mockLlmClient") LlmClient llmClient) {
+    public RagService(KeyWordSearchService searchService, @Qualifier("mockLlmClient") LlmClient llmClient) {
         this.searchService = searchService;
         this.llmClient = llmClient;
     }

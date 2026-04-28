@@ -1,0 +1,29 @@
+Apache Kafka Event Processing
+
+Apache Kafka is a distributed platform designed for handling
+high‑throughput, real‑time data streams.
+It is commonly used for event‑driven architectures.
+
+Kafka is based on topics, partitions and consumers.
+Producers publish events to topics, and consumers read those
+events asynchronously.
+
+Events in Kafka are stored in an append‑only log.
+This design allows Kafka to scale horizontally and
+handle large volumes of data efficiently.
+
+One of the main advantages of Kafka is its ability to decouple
+systems.
+Producers and consumers do not need to know about each other,
+which improves scalability and resilience.
+
+Kafka provides durability by persisting events to disk.
+If a consumer fails, it can resume processing events
+from the last committed offset.
+
+Event reprocessing is a common use case in Kafka.
+Since events are not deleted immediately, consumers can
+replay past messages to rebuild state or fix errors.
+
+Kafka is often used for streaming pipelines, log aggregation,
+real‑time analytics and data integration between systems.

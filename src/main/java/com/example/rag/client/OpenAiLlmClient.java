@@ -22,48 +22,52 @@ public class OpenAiLlmClient implements LlmClient {
 
     @Override
     public String generate(String prompt) {
-
         try {
-            String requestBody = """
-                {
-                  "model": "gpt-4o-mini",
-                  "messages": [
-                    {
-                      "role": "user",
-                      "content": %s
-                    }
-                  ],
-                  "temperature": 0.2
-                }
-                """.formatted(escapeJson(prompt));
-
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.openai.com/v1/chat/completions"))
-                    .header("Authorization", "Bearer " + apiKey)
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                    .build();
-
-            HttpResponse<String> response =
-                    httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
+            String requestBody = buildRequestBody(prompt);
+            HttpRequest request = buildHttpRequest(requestBody);
+            HttpResponse<String> response = sendRequest(request);
             return extractAnswer(response.body());
-
         } catch (Exception e) {
-            throw new RuntimeException("Error calling OpenAI", e);
+            throw new RuntimeException("Error generating response", e);
         }
     }
 
-    private String extractAnswer(String responseBody) {
-        // parsing muy simplificado y entendible
-        JSONObject json = new JSONObject(responseBody);
-        return json.getJSONArray("choices")
-                   .getJSONObject(0)
-                   .getJSONObject("message")
-                   .getString("content");
+    private String buildRequestBody(String prompt) {
+        return """
+            {
+              "model": "gpt-4o-mini",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": %s
+                }
+              ],
+              "temperature": 0.2
+            }
+            """.formatted(escapeJson(prompt));
     }
 
-    private String escapeJson(String text) {
-        return JSONObject.quote(text);
+    private HttpRequest buildHttpRequest(String requestBody) {
+        return HttpRequest.newBuilder()
+                .uri(URI.create("https://api.openai.com/v1/chat/completions"))
+                .header("Authorization", "Bearer " + apiKey)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+    }
+
+    private HttpResponse<String> sendRequest(HttpRequest request) throws Exception {
+        return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    private String escapeJson(String input) {
+        return JSONObject.quote(input);
+    }
+
+    private String extractAnswer(String responseBody) {
+        JSONObject jsonResponse = new JSONObject(responseBody);
+        return jsonResponse.getJSONArray("choices")
+                .getJSONObject(0)
+                .getString("message");
     }
 }
