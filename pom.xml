@@ -56,6 +56,13 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
+
+    <!-- Spring Security Test -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -66,4 +73,13 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+            <profile>
+                <id>mock</id>
+                <properties>
+                    <spring.profiles.active>mock</spring.profiles.active>
+                </properties>
+            </profile>
+        </profiles>
 </project>

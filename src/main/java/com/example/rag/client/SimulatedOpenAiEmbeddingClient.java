@@ -9,6 +9,10 @@ public class SimulatedOpenAiEmbeddingClient implements EmbeddingClient {
 
     @Override
     public float[] embed(String text) {
+        if (text == null || text.isEmpty()) {
+            return new float[VECTOR_SIZE];
+        }
+
         float[] vector = new float[VECTOR_SIZE];
         String normalized = normalize(text);
 
@@ -34,7 +38,12 @@ public class SimulatedOpenAiEmbeddingClient implements EmbeddingClient {
         }
         norm = (float) Math.sqrt(norm);
 
-        if (norm == 0) return;
+        if (norm == 0) {
+            for (int i = 0; i < vector.length; i++) {
+                vector[i] = 0.0f;
+            }
+            return;
+        }
 
         for (int i = 0; i < vector.length; i++) {
             vector[i] /= norm;
