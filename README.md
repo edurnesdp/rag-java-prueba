@@ -54,43 +54,9 @@ Todo de forma clara y fácil de entender.
 
 ## 🏗️ Arquitectura (simplificada)
 
-┌──────────────┐
-│    Usuario   │
-└───────┬──────┘
-        │ Pregunta
-        ▼
-┌────────────────────┐
-│ API Java (Spring)  │
-│  Endpoint /ask    │
-└───────┬────────────┘
-        │
-        │ 1. Analiza la pregunta
-        ▼
-┌────────────────────┐
-│ Búsqueda en        │
-│ documentos locales │
-│ (SearchService)    │
-└───────┬────────────┘
-        │
-        │ 2. Textos relevantes
-        ▼
-┌────────────────────┐
-│ Construcción del   │
-│ prompt RAG         │
-│ (pregunta + textos)│
-└───────┬────────────┘
-        │
-        │ 3. Generar respuesta
-        ▼
-┌────────────────────┐
-│ IA Generativa      │
-│ (solo redacta)     │
-└───────┬────────────┘
-        │
-        ▼
-┌──────────────┐
-│  Respuesta   │
-└──────────────┘
+![Arquitectura Simplificada](docs/images/arquitectura-simplificada.png)
+
+Este diagrama representa el flujo simplificado de la arquitectura del proyecto.
 
 ### SearchService
 
