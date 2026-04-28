@@ -1,14 +1,12 @@
 package com.example.rag.service;
 
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.example.rag.model.EmbeddedChunk;
 import com.example.rag.model.DocumentChunk;
 import com.example.rag.client.EmbeddingClient;
 
-@Service
-@Profile("semantic")
+@Service("semanticSearchService")
 public class SemanticSearchService implements SearchService {
 
     private final List<EmbeddedChunk> embeddedChunks;

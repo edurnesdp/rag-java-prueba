@@ -9,7 +9,6 @@ import java.util.HashMap;
 import com.example.rag.model.DocumentChunk;
 
 @Service
-@Profile("hybrid")
 public class HybridSearchService implements SearchService {
 
     private final SearchService keywordSearchService;
@@ -31,6 +30,9 @@ public class HybridSearchService implements SearchService {
 
         List<DocumentChunk> semanticResults =
                 semanticSearchService.search(question, maxResults);
+        
+        System.out.println("Keyword results: " + keywordResults.size());
+        System.out.println("Semantic results: " + semanticResults.size());
 
         // 2. Combinar resultados con puntuación
         Map<DocumentChunk, Double> scores = new HashMap<>();

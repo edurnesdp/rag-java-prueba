@@ -1,10 +1,8 @@
 package com.example.rag.client;
 
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
-@Profile("semantic")
 public class SimulatedOpenAiEmbeddingClient implements EmbeddingClient {
 
     private static final int VECTOR_SIZE = 256;
