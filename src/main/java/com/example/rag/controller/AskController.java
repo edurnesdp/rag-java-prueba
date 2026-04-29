@@ -1,10 +1,13 @@
 package com.example.rag.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.rag.service.RagService;
+import com.example.rag.dto.QuestionRequest;
 
 @RestController
 public class AskController {
@@ -17,9 +20,9 @@ public class AskController {
 
 
     
-    @GetMapping("/ask")
-    public String ask(@RequestParam String question) {
-        return ragService.answer(question);
+    @PostMapping("/ask")
+    public String ask(@RequestBody QuestionRequest questionRequest) {
+        return ragService.answer(questionRequest.getQuestion());
     }
 
     @GetMapping("/status")

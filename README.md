@@ -233,11 +233,36 @@ Puedes probar la autenticación utilizando herramientas como `curl` o Postman.
 
 **Ejemplo con `curl`**:
 ```bash
-curl -u user:password http://localhost:8080/ask
+curl -u user:password -X POST -H "Content-Type: application/json" -d '{"question":"¿Cuál es la política de vacaciones?"}' http://localhost:8080/ask
 ```
 
 Si las credenciales son correctas, recibirás una respuesta exitosa. Si no, obtendrás un error `401 Unauthorized`.
 
 ---
 
-**Nota:** Este proyecto ha sido generado parcialmente utilizando GitHub Copilot, una herramienta de asistencia de código basada en inteligencia artificial. Todo el código generado ha sido revisado y adaptado para cumplir con los requisitos del proyecto.
+## 🚀 Cómo usar el método `ask`
+
+El método `ask` permite enviar preguntas al sistema y obtener respuestas basadas en tus documentos.
+
+### **Endpoint**
+- **URL**: `/ask`
+- **Método HTTP**: `POST`
+- **Formato de entrada**: JSON
+
+### **Ejemplo de solicitud**
+```json
+{
+  "question": "¿Cuál es la política de vacaciones?"
+}
+```
+
+### **Ejemplo de respuesta**
+```json
+{
+  "answer": "La política de vacaciones establece que..."
+}
+```
+
+### **Notas**
+- Asegúrate de que el servidor esté corriendo con el perfil adecuado (`mock`, `prod`, etc.).
+- El método utiliza el servicio `RagService` para procesar la pregunta y generar la respuesta.
