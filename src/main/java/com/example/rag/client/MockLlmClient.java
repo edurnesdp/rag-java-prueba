@@ -10,17 +10,10 @@ public class MockLlmClient implements LlmClient {
     @Override
     public String generate(String prompt) {
 
-        if (prompt.contains("No dispongo de información suficiente")) {
-            return "No dispongo de información suficiente para responder.";
-        }
+        System.out.println("Contenido del prompt: " + prompt);
 
-        return """
-               [RESPUESTA GENERADA POR MockLlmClient]
+    
 
-               Esta respuesta se ha generado utilizando únicamente
-               la información proporcionada en el contexto.
-
-               (Simulación de respuesta de una IA)
-               """;
+        return prompt;
     }
 }

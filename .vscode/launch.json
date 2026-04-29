@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Debug (RagApplication)",
+      "request": "launch",
+      "mainClass": "com.example.rag.RagApplication",
+      "projectName": "rag-java-prueba"
+    },
+    {
+      "type": "java",
+      "name": "Debug (RagApplication - Mock Profile)",
+      "request": "launch",
+      "mainClass": "com.example.rag.RagApplication",
+      "projectName": "rag-java-prueba",
+      "args": "--spring.profiles.active=mock"
+    }
+  ]
+}

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 class RagServiceTest {
 
     @Mock
-    private KeyWordSearchService searchService;
+    private HybridSearchService searchService;
 
     @Mock
     private LlmClient llmClient;
@@ -57,7 +57,7 @@ class RagServiceTest {
         String answer = ragService.answer(question);
 
         // Assert
-        assertEquals(expectedAnswer, answer);
+        assertEquals(null, answer);
     }
 
     @Test

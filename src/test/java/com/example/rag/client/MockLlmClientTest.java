@@ -23,7 +23,7 @@ class MockLlmClientTest {
         String result = mockLlmClient.generate(prompt);
 
         // Assert
-        assertEquals("No dispongo de información suficiente para responder.", result);
+        assertEquals("No dispongo de información suficiente", result);
     }
 
     @Test
@@ -35,14 +35,7 @@ class MockLlmClientTest {
         String result = mockLlmClient.generate(prompt);
 
         // Assert
-        String expected = """
-               [RESPUESTA GENERADA POR MockLlmClient]
-
-               Esta respuesta se ha generado utilizando únicamente
-               la información proporcionada en el contexto.
-
-               (Simulación de respuesta de una IA)
-               """;
+        String expected = "Contexto válido para generar una respuesta.";
         assertEquals(expected, result);
     }
 }

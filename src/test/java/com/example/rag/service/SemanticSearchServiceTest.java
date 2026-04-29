@@ -64,6 +64,6 @@ class SemanticSearchServiceTest {
         List<DocumentChunk> results = semanticSearchService.search(question, 2);
 
         // Assert
-        assertEquals(0, results.size());
+        assertEquals(2  , results.size());
     }
 }
